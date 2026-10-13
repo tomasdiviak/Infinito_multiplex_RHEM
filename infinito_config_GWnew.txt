@@ -1,0 +1,136 @@
+<?xml version="1.0" ?>
+<eventnet.configuration name="infinito_config_GWnew" version="1.2.1">
+  <input.files accept=".csv" has.header="true" delimiter="COMMA" quote.char="DOUBLEQUOTE">
+    <input.directory name="."/>
+    <file name="InfinitoEventsFinalUp.csv"/>
+  </input.files>
+  <output.directory name="."/>
+  <event.components>
+    <component name="SOURCE" column.name="ID"/>
+    <component name="TARGET" column.name="ID"/>
+    <component name="TIME" column.name="date"/>
+    <component name="TYPE" column.name="type"/>
+    <component name="WEIGHT" column.name="weight"/>
+    <component name="EVENT_INTERVAL_ID" column.name="Cod_ev"/>
+  </event.components>
+  <network.mode is.multimode="false"/>
+  <event.types>
+    <type name="call" implied="false" admits.loops="true"/>
+    <type name="leader" implied="false" admits.loops="true"/>
+    <type name="kin" implied="false" admits.loops="true"/>
+    <type name="mtng" implied="false" admits.loops="true"/>
+    <type name="chrg" implied="false" admits.loops="true"/>
+    <type name="gndr" implied="false" admits.loops="true"/>
+    <type name="locale" implied="false" admits.loops="true"/>
+    <type name="age" implied="false" admits.loops="true"/>
+    <type name="add.actor" implied="false" admits.loops="true"/>
+  </event.types>
+  <time time.format.type="DATE_TIME" interval.type="TIME" time.unit="1" calendar.time.unit="DAY" date.format.pattern="MM/dd/yyyy"/>
+  <attribute name="at.risk" class="NODE_LEVEL" type="DEFAULT_NODE_LEVEL_ATTRIBUTE" description="">
+    <attr.update type="SET_VALUE_TO"/>
+    <event.response event.type="add.actor" direction="OUT"/>
+  </attribute>
+  <attribute name="leader" class="NODE_LEVEL" type="DEFAULT_NODE_LEVEL_ATTRIBUTE" description="">
+    <attr.update type="SET_VALUE_TO"/>
+    <event.response event.type="leader" direction="OUT"/>
+  </attribute>
+  <attribute name="gender" class="NODE_LEVEL" type="DEFAULT_NODE_LEVEL_ATTRIBUTE" description="">
+    <attr.update type="SET_VALUE_TO"/>
+    <event.response event.type="gndr" direction="OUT"/>
+  </attribute>
+  <attribute name="locale" class="NODE_LEVEL" type="DEFAULT_NODE_LEVEL_ATTRIBUTE" description="">
+    <attr.update type="SET_VALUE_TO"/>
+    <event.response event.type="locale" direction="OUT"/>
+  </attribute>
+  <attribute name="age" class="NODE_LEVEL" type="DEFAULT_NODE_LEVEL_ATTRIBUTE" description="">
+    <attr.update type="SET_VALUE_TO"/>
+    <event.response event.type="age" direction="OUT"/>
+  </attribute>
+  <attribute name="kin.hyed" class="UNDIR_HYPER_LEVEL" type="DEFAULT_UHE_ATTRIBUTE" description="">
+    <attr.update type="SET_VALUE_TO"/>
+    <event.response event.type="kin"/>
+  </attribute>
+  <attribute name="meetings.hyed" class="UNDIR_HYPER_LEVEL" type="DEFAULT_UHE_ATTRIBUTE" description="">
+    <attr.update type="INCREMENT_VALUE_BY"/>
+    <event.response event.type="mtng"/>
+  </attribute>
+  <attribute name="offenses.hyed" class="UNDIR_HYPER_LEVEL" type="DEFAULT_UHE_ATTRIBUTE" description="">
+    <attr.update type="INCREMENT_VALUE_BY"/>
+    <event.response event.type="chrg"/>
+  </attribute>
+  <attribute name="calls.hyed" class="UNDIR_HYPER_LEVEL" type="DEFAULT_UHE_ATTRIBUTE" description="">
+    <attr.update type="INCREMENT_VALUE_BY"/>
+    <event.response event.type="call"/>
+  </attribute>
+  <attribute name="meetings.dyadic" class="DYAD_LEVEL" type="DYAD_LEVEL_ATTRIBUTE_FROM_UHE" description="">
+    <attr.update type="INCREMENT_VALUE_BY"/>
+    <event.response event.type="mtng"/>
+  </attribute>
+  <attribute name="offenses.dyadic" class="DYAD_LEVEL" type="DYAD_LEVEL_ATTRIBUTE_FROM_UHE" description="">
+    <attr.update type="INCREMENT_VALUE_BY"/>
+    <event.response event.type="chrg"/>
+  </attribute>
+  <attribute name="calls.dyadic" class="DYAD_LEVEL" type="DYAD_LEVEL_ATTRIBUTE_FROM_UHE" description="">
+    <attr.update type="INCREMENT_VALUE_BY"/>
+    <event.response event.type="call"/>
+  </attribute>
+  <statistic name="size" type="UHE_SIZE_STAT"/>
+  <statistic name="ratio.leader" type="UHE_NODE_STAT" node.attr.name.1="leader" na.value="-1.0"/>
+  <statistic name="diff.leader" type="UHE_NODE_STAT" node.attr.name.1="leader" na.value="-1.0">
+    <aggregation.function type="ABSDIFF"/>
+  </statistic>
+  <statistic name="ratio.gender" type="UHE_NODE_STAT" node.attr.name.1="gender" na.value="-1.0"/>
+  <statistic name="diff.gender" type="UHE_NODE_STAT" node.attr.name.1="gender" na.value="-1.0">
+    <aggregation.function type="ABSDIFF"/>
+  </statistic>
+  <statistic name="avg.age" type="UHE_NODE_STAT" node.attr.name.1="age" na.value="-1.0"/>
+  <statistic name="diff.age" type="UHE_NODE_STAT" node.attr.name.1="age" na.value="-1.0">
+    <aggregation.function type="ABSDIFF"/>
+  </statistic>
+  <statistic name="diff.locale" type="UHE_NODE_STAT" node.attr.name.1="locale" na.value="-1.0">
+    <aggregation.function type="CATDIFF"/>
+  </statistic>
+  <statistic name="kin" type="UHE_SUB_REPETITION_STAT" hyperedge.attr.name.1="kin.hyed" hyperedge.size="2"/>
+  <statistic name="meeting.exact.repetition" type="UHE_REPETITION_STAT" hyperedge.attr.name.1="meetings.hyed"/>
+  <statistic name="meeting.sub.rep.1" type="UHE_SUB_REPETITION_STAT" hyperedge.attr.name.1="meetings.hyed" hyperedge.size="1"/>
+  <statistic name="meeting.sub.rep.2" type="UHE_SUB_REPETITION_STAT" hyperedge.attr.name.1="meetings.hyed" hyperedge.size="2"/>
+  <statistic name="meeting.sub.rep.3" type="UHE_SUB_REPETITION_STAT" hyperedge.attr.name.1="meetings.hyed" hyperedge.size="3"/>
+  <statistic name="meeting.sub.rep.GW.5" type="UHE_GW_SUB_REP_STAT" hyperedge.attr.name.1="meetings.hyed" kappa="5.0"/>
+  <statistic name="meeting.sub.rep.GW.2" type="UHE_GW_SUB_REP_STAT" hyperedge.attr.name.1="meetings.hyed" kappa="2.0"/>
+  <statistic name="meeting.sub.rep.GW.3.5" type="UHE_GW_SUB_REP_STAT" hyperedge.attr.name.1="meetings.hyed" kappa="3.5"/>
+  <statistic name="meeting.closure" type="UHE_CLOSURE_STAT" dyad.attr.name.1="meetings.dyadic" direction.1="OUT" dyad.attr.name.2="meetings.dyadic" direction.2="OUT">
+    <function.combine.parallel type="SUM"/>
+    <function.combine.serial type="MIN"/>
+  </statistic>
+  <statistic name="meeting.degree" type="UHE_NEIGHBOR_STAT" dyad.attr.name.1="meetings.dyadic" direction.1="OUT"/>
+  <statistic name="offense.exact.repetition" type="UHE_REPETITION_STAT" hyperedge.attr.name.1="offenses.hyed"/>
+  <statistic name="offense.sub.rep.1" type="UHE_SUB_REPETITION_STAT" hyperedge.attr.name.1="offenses.hyed" hyperedge.size="1"/>
+  <statistic name="offense.sub.rep.2" type="UHE_SUB_REPETITION_STAT" hyperedge.attr.name.1="offenses.hyed" hyperedge.size="2"/>
+  <statistic name="offense.sub.rep.GW.5" type="UHE_GW_SUB_REP_STAT" hyperedge.attr.name.1="offenses.hyed" kappa="5.0"/>
+  <statistic name="offense.sub.rep.GW.2" type="UHE_GW_SUB_REP_STAT" hyperedge.attr.name.1="offenses.hyed" kappa="2.0"/>
+  <statistic name="offense.sub.rep.GW.3.5" type="UHE_GW_SUB_REP_STAT" hyperedge.attr.name.1="offenses.hyed" kappa="3.5"/>
+  <statistic name="offense.closure" type="UHE_CLOSURE_STAT" dyad.attr.name.1="offenses.dyadic" direction.1="OUT" dyad.attr.name.2="offenses.dyadic" direction.2="OUT">
+    <function.combine.parallel type="SUM"/>
+    <function.combine.serial type="MIN"/>
+  </statistic>
+  <statistic name="offense.degree" type="UHE_NEIGHBOR_STAT" dyad.attr.name.1="offenses.dyadic" direction.1="OUT"/>
+  <statistic name="call.exact.repetition" type="UHE_REPETITION_STAT" hyperedge.attr.name.1="calls.hyed"/>
+  <statistic name="call.sub.rep.1" type="UHE_SUB_REPETITION_STAT" hyperedge.attr.name.1="calls.hyed" hyperedge.size="1"/>
+  <statistic name="call.sub.rep.GW.5" type="UHE_GW_SUB_REP_STAT" hyperedge.attr.name.1="calls.hyed" kappa="5.0"/>
+  <statistic name="call.sub.rep.GW.2" type="UHE_GW_SUB_REP_STAT" hyperedge.attr.name.1="calls.hyed" kappa="2.0"/>
+  <statistic name="call.sub.rep.GW.3.5" type="UHE_GW_SUB_REP_STAT" hyperedge.attr.name.1="calls.hyed" kappa="3.5"/>
+  <statistic name="call.closure" type="UHE_CLOSURE_STAT" dyad.attr.name.1="calls.dyadic" direction.1="OUT" dyad.attr.name.2="calls.dyadic" direction.2="OUT">
+    <function.combine.parallel type="SUM"/>
+    <function.combine.serial type="MIN"/>
+  </statistic>
+  <statistic name="call.degree" type="UHE_NEIGHBOR_STAT" dyad.attr.name.1="calls.dyadic" direction.1="OUT"/>
+  <observation name="MEETINGS" type="COND_SIZE_UHE_OBS" apply.case.control.sampling="true" number.of.non.events="10000" non.events.are.per.observed.event="true" node.is.non.zero.on.attr="at.risk">
+    <consider.event.type name="mtng"/>
+  </observation>
+  <observation name="OFFENSES" type="COND_SIZE_UHE_OBS" apply.case.control.sampling="true" number.of.non.events="10000" non.events.are.per.observed.event="true" node.is.non.zero.on.attr="at.risk">
+    <consider.event.type name="chrg"/>
+  </observation>
+  <observation name="CALLS" type="COND_SIZE_UHE_OBS" apply.case.control.sampling="true" number.of.non.events="10000" non.events.are.per.observed.event="true" node.is.non.zero.on.attr="at.risk">
+    <consider.event.type name="call"/>
+  </observation>
+</eventnet.configuration>
