@@ -1,5 +1,5 @@
 # **Exploring the Dynamic Interplay between Communication and Co-offending Using Relational Hyperevent Data on an Italian Mafia Network** 
-Code used for data processing, description, and RHEM modelling in Diviák, T., C. Paternoster, J. Lerner., & F. Calderoni (2026). Exploring the Dynamic Interplay between Communication and Co-offending Using Relational Hyperevent Data on an Italian Mafia Network. *Trends in Organized Crime*. [10.1007/s12117-026-09626-3]
+Code used for data processing, description, and RHEM modelling in Diviák, T., C. Paternoster, J. Lerner., & F. Calderoni (2026). Exploring the Dynamic Interplay between Communication and Co-offending Using Relational Hyperevent Data on an Italian Mafia Network. *Trends in Organized Crime*. [https://doi.org/10.1007/s12117-026-09626-3]
 
 **InfinitoRHEdescriptivesUp.R**: data processing, descriptive analysis of the network focusing on its structure, visualisation, and analysing the frequency of events over time. 
 
